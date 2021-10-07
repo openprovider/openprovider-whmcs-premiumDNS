@@ -1,0 +1,43 @@
+{
+    "autoload": {
+        "psr-4": {
+            "OpenproviderPremiumDns\\": "./",
+            "GuzzleHttp6\\": "vendor-static/guzzlehttp/guzzle/src",
+            "GuzzleHttp6\\Psr7\\": "vendor-static/guzzlehttp/psr7/src/",
+            "GuzzleHttp6\\Promise\\": "vendor-static/guzzlehttp/promises/src/"
+        },
+        "files":  [
+            "helper.php",
+            "vendor-static/guzzlehttp/guzzle/src/functions_include.php",
+            "vendor-static/guzzlehttp/psr7/src/functions_include.php",
+            "vendor-static/guzzlehttp/promises/src/functions_include.php"
+        ],
+        "classmap": [
+            "lib/"
+        ]
+    },
+    "require": {
+        "openprovider/rest-client-php": "dev-v1beta",
+        "phpdocumentor/reflection-docblock": "^5.2",
+        "symfony/serializer": "^5.2",
+        "symfony/property-access": "^5.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7",
+        "mockery/mockery": "^1.0",
+        "php-mock/php-mock-mockery": "^1.2",
+        "illuminate/database": "6.20.*"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/openprovider/rest-client-php"
+        }
+    ],
+    "scripts": {
+        "post-install-cmd": [
+            "OpenproviderPremiumDns\\scripts\\UpdateGuzzleNamespace::postUpdate",
+            "composer dump-autoload"
+        ]
+    }
+}
