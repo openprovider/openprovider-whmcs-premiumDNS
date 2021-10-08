@@ -37,7 +37,7 @@ class OpenproviderPremiumDnsModuleHelper
     public function initApi(string $username, string $password)
     {
         $this->api = new OpenproviderApi();
-        $this->api->getConfig()->setHost($this->api->getApiSettings()->getCteUrl());
+        $this->api->getConfig()->setHost($this->api->getApiSettings()->getUrl());
 
         $tokenRequest = $this->call(ApiCommandNames::GENERATE_AUTH_TOKEN_REQUEST, [
             'username' => $username,
