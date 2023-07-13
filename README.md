@@ -1,6 +1,6 @@
 # NOT BEING MAINTAINED
 
-**The Premium DNS Model will receive no updates until further notice**
+**The Premium DNS Module will receive no updates until further notice**
 
 # openprovider-whmcs-premiumDNS 
 
