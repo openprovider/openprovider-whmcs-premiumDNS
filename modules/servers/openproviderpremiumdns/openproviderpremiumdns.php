@@ -106,7 +106,7 @@ function openproviderpremiumdns_CreateAccount(array $params)
     if ($dnsZoneResponse->getCode() == 0) {
         $modifyZoneResponse = $moduleHelper->call(ApiCommandNames::MODIFY_ZONE_DNS_REQUEST, [
             'name' => $params['domain'],
-            'premiumDNS' => true,
+            'provider' => 'sectigo',
         ]);
 
         if ($modifyZoneResponse->getCode() != 0) {
@@ -127,7 +127,7 @@ function openproviderpremiumdns_CreateAccount(array $params)
         'domain' => $domainArray,
         'records' => [],
         'type' => CREATE_DNS_ZONE_TYPE,
-        'premiumDNS' => true,
+        'provider' => 'sectigo',
     ]);
 
     if ($createDnsZoneResponse->getCode() != 0) {
