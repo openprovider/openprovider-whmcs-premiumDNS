@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/openproviderpremiumdns.php';
+
 use WHMCS\Database\Capsule;
 use OpenproviderPremiumDns\OpenproviderPremiumDnsModuleHelper;
 
