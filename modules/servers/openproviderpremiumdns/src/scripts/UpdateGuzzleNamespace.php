@@ -1,0 +1,66 @@
+<?php
+
+namespace OpenproviderPremiumDns\scripts;
+
+use Composer\Script\Event;
+
+class UpdateGuzzleNamespace
+{
+    public static function postUpdate(Event $event)
+    {
+        $vendorDir = $event->getComposer()->getConfig()->get('vendor-dir');
+
+        if (!is_dir("{$vendorDir}/guzzlehttp")) {
+            return;
+        }
+
+        $vendorStaticDir = "{$vendorDir}/../vendor-static";
+        
+        self::takeoutGuzzleFromVendor($vendorDir, $vendorStaticDir);
+        self::replaceGuzzleNamespaceInDirectory("{$vendorStaticDir}/guzzlehttp");
+        self::replaceGuzzleNamespaceInDirectory("{$vendorDir}/openprovider/rest-client-php/src");
+
+        $libDir = "{$vendorDir}/../lib";
+        self::replaceGuzzleNamespaceInDirectory("{$libDir}");
+    }
+
+    private static function replaceGuzzleNamespaceInDirectory(string $pathDir)
+    {
+        if (!is_dir($pathDir)) {
+            return;
+        }
+
+        $directory = opendir($pathDir);
+
+        while ($element = readdir($directory)) {
+            if ($element == '.' || $element == '..') {
+                continue;
+            }
+
+            if (is_dir("{$pathDir}/{$element}")) {
+                self::replaceGuzzleNamespaceInDirectory("{$pathDir}/{$element}");
+
+                continue;
+            }
+
+            $filePath = "{$pathDir}/{$element}";
+            $fileContent = file_get_contents($filePath);
+            $fileContent = preg_replace('/GuzzleHttp6*/', 'GuzzleHttp6', $fileContent);
+            file_put_contents($filePath, $fileContent);
+        }
+    }
+
+    private static function takeoutGuzzleFromVendor(string $vendorDir, string $vendorStaticDir)
+    {
+        $vendorStaticGuzzle = escapeshellarg($vendorStaticDir . '/guzzlehttp');
+        shell_exec("rm -rf $vendorStaticGuzzle");
+
+
+        $vendorDirEscaped = escapeshellarg($vendorDir . '/guzzlehttp');
+        $vendorStaticDirEscaped = escapeshellarg($vendorStaticDir);
+
+
+        shell_exec("mkdir -p $vendorStaticDirEscaped && mv $vendorDirEscaped $vendorStaticDirEscaped");
+    }
+
+}
