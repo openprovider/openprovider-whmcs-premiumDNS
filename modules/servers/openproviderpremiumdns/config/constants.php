@@ -5,7 +5,7 @@ const CREATE_DNS_ZONE_TYPE = 'master';
 const SUCCESS_MESSAGE = 'success';
 
 const MODULE_NAME = 'Openprovider PremiumDNS';
-const API_VERSION = '1.1'; // Use API Version 1.1
+const API_VERSION = '2.0'; // Use API Version 2.0
 const REQUIRES_SERVER = true; // Set true if module requires a server to work
 const DEFAULT_NON_SSL_PORT = '1111'; // Default Non-SSL Connection Port
 const DEFAULT_SSL_PORT = '1112'; // Default SSL Connection Port
