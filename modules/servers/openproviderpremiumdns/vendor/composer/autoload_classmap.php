@@ -84,6 +84,7 @@ return array(
     'OpenproviderPremiumDns\\lib\\LastRequest' => $baseDir . '/lib/last_request.php',
     'OpenproviderPremiumDns\\lib\\OpenproviderApi' => $baseDir . '/lib/openprovider_api.php',
     'OpenproviderPremiumDns\\lib\\Response' => $baseDir . '/lib/response.php',
+    'OpenproviderPremiumDns\\lib\\RestCurlApi' => $baseDir . '/lib/rest_curl_api.php',
     'OpenproviderPremiumDns\\lib\\helpers\\IdnEncoder' => $baseDir . '/lib/helpers/idn_encoder.php',
     'OpenproviderPremiumDns\\lib\\paramsBuilder\\CheckDomainsParamsCreator' => $baseDir . '/lib/params_builder/check_domains_params_creator.php',
     'OpenproviderPremiumDns\\lib\\paramsBuilder\\ModifyDomainParamsCreator' => $baseDir . '/lib/params_builder/modify_domain_params_creator.php',
