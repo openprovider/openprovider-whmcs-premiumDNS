@@ -4,6 +4,7 @@ namespace OpenproviderPremiumDns\lib;
 
 use Openprovider\Api\Rest\Client\Dns\Api\ZoneServiceApi;
 use Openprovider\Api\Rest\Client\Auth\Api\AuthApi;
+use Openprovider\Api\Rest\Client\Domain\Api\DomainServiceApi;
 
 class CommandMapping
 {
@@ -33,6 +34,12 @@ class CommandMapping
         'deleteZoneDnsRequest' => [
             self::COMMAND_MAP_METHOD => 'createZone',
             self::COMMAND_MAP_CLASS => ZoneServiceApi::class,
+        ],
+
+        // DOMAINS
+        'searchDomainRequest' => [
+            self::COMMAND_MAP_METHOD => 'listDomains',
+            self::COMMAND_MAP_CLASS => DomainServiceApi::class,
         ],
     ];
 
