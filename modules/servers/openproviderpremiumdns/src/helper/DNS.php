@@ -3,7 +3,7 @@
 namespace OpenproviderPremiumDns\helper;
 
 use WHMCS\Database\Capsule;
-use OpenproviderPremiumDns\lib\xmlapihelper\API;
+use OpenproviderPremiumDns\lib\RestCurlApi;
 
 class DNS
 {
@@ -25,28 +25,15 @@ class DNS
         if ($domain->registrar != 'openprovider' || $domain->status != 'Active')
             return false;
 
-        // Let's get the URL.
+        // Getet the URL.
         try {
+            $restCurlApi = new RestCurlApi();
 
-            $xmlApiCall = new API();
-            $premiumDnsModuleHelper = new OpenproviderPremiumDnsModuleHelper();
+            $getDnsSingleDomainTokenUrlResponse = $restCurlApi->getDnsSingleDomainTokenUrl($params);
 
-            $username = $params['configoption1'];
-            $password = $params['configoption2'];
-
-            $args = [
-                'Username' => $username,
-                'Password' => $password,
-            ];
-
-            $xmlApiCall->setParams($args, 0);
-
-            $getDnsSingleDomainTokenUrlResponse = $xmlApiCall->getDnsSingleDomainTokenUrl($premiumDnsModuleHelper->getDomainArrayFromDomain($domainName), $params);
-
-            return $getDnsSingleDomainTokenUrlResponse['url'];
+            return $getDnsSingleDomainTokenUrlResponse['result']->data->url;
         } catch (\Exception $e) {
-            \logModuleCall(MODULE_NAME, 'Fetching generateSingleDomainTokenRequest', $domain->domain, $e->getMessage(), null, null);
-            throw new \Exception('Error fetching DNS URL: ' . $e->getMessage());
+            throw new \Exception(" : " . $e->getMessage());
         }
     }
 }

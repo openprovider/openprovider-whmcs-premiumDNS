@@ -130,6 +130,8 @@ function openproviderpremiumdns_manage_pdns(array $params)
                     });
                     </script>';
             exit;
+        } else {
+            throw new Exception("Failing to get DNS URL. Please check error logs for more details.");
         }
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
