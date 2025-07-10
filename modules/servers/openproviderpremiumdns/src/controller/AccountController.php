@@ -13,6 +13,11 @@ class AccountController
         $username = $params['configoption1'];
         $password = $params['configoption2'];
 
+        $isDNSSECEnabled = (
+            isset($params['customfields']["DNSSEC_CUSTOM_FIELD_NAME"]) &&
+            $params['customfields'][DNSSEC_CUSTOM_FIELD_NAME] === 'on'
+        ) ? true : false;
+
         $moduleHelper = new OpenproviderPremiumDnsModuleHelper();
 
         if (!$moduleHelper->initApi($username, $password)) {
@@ -47,6 +52,7 @@ class AccountController
             'records' => [],
             'type' => CREATE_DNS_ZONE_TYPE,
             'provider' => 'sectigo',
+            'secured' => $isDNSSECEnabled,
         ]);
 
         if ($createDnsZoneResponse->getCode() != 0) {

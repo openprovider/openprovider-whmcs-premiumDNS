@@ -25,3 +25,4 @@ const ERROR_DOMAIN_NOT_FOUND_IN_OPENPROVIDER = 'This domain not found in Openpro
 
 const ZONE_PROVIDER_SECTIGO = 'sectigo';
 const ZONE_PROVIDER_OPENPROVIDER = 'openprovider';
+const DNSSEC_CUSTOM_FIELD_NAME = 'DNSSEC';
