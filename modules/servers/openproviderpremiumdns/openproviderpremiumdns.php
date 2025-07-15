@@ -4,6 +4,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'a
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'constants.php';
 
 use OpenproviderPremiumDns\controller\AccountController;
+use OpenproviderPremiumDns\controller\DNSSECController;
 use OpenproviderPremiumDns\helper\DNS;
 
 if (!defined("WHMCS")) {
@@ -87,7 +88,9 @@ function openproviderpremiumdns_CreateAccount(array $params)
 function openproviderpremiumdns_ClientAreaCustomButtonArray()
 {
     return array(
-        "Manage PDNS" => "manage_pdns"
+        "Manage PDNS" => "manage_pdns",
+        "Manage DNSSEC" => "manage_dnssec",
+        "Activate/Deactivate DNSSEC" => "toggle_dnssec",
     );
 }
 
@@ -147,4 +150,37 @@ function openproviderpremiumdns_manage_pdns(array $params)
     }
 
     return SUCCESS_MESSAGE;
+}
+
+/**
+ * Custom function for performing manage dnssec.
+ *
+ * Similar to all other module call functions, they should either return
+ * 'success' or an error message to be displayed.
+ *
+ * @param array $params common module parameters
+ *
+ * @see https://developers.whmcs.com/provisioning-modules/module-parameters/
+ *
+ * @return string "success" or an error message
+ */
+function openproviderpremiumdns_manage_dnssec(array $params)
+{
+    $controller = new DNSSECController();
+    return $controller->showClientAreaDnssecPage($params);
+}
+/**
+ * Custom function for toggling DNSSEC.
+ *
+ * This function is called when the user clicks the "Activate/Deactivate DNSSEC" button (Mapped to Manage DNSSEC template "Activate/Deactivate DNSSEC").
+ * It updates the DNSSEC status in WHMCS and Openprovider.
+ *
+ * @param array $params common module parameters
+ *
+ * @return string "success" or an error message
+ */
+function openproviderpremiumdns_toggle_dnssec(array $params)
+{
+    $controller = new DNSSECController();
+    return $controller->toggleDnssecStatus($params);
 }
