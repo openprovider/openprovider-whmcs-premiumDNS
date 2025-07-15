@@ -32,7 +32,7 @@ class CommandMapping
             self::COMMAND_MAP_CLASS => ZoneServiceApi::class,
         ],
         'deleteZoneDnsRequest' => [
-            self::COMMAND_MAP_METHOD => 'createZone',
+            self::COMMAND_MAP_METHOD => 'deleteZone',
             self::COMMAND_MAP_CLASS => ZoneServiceApi::class,
         ],
 

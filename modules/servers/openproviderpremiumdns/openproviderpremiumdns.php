@@ -71,3 +71,28 @@ function openproviderpremiumdns_CreateAccount(array $params)
     $controller = new AccountController();
     return $controller->createAccount($params);
 }
+
+/**
+ * Additional actions a client user can invoke.
+ *
+ * Define additional actions a client user can perform for an instance of a
+ * product/service.
+ *
+ * Any actions you define here will be automatically displayed in the available
+ * list of actions within the client area.
+ *
+ * @return array
+ */
+function openproviderpremiumdns_ClientAreaCustomButtonArray()
+{
+    return array(
+        "Manage PDNS" => "manage_pdns",
+        "Delete PDNS Zone" => "TerminateAccount"
+    );
+}
+
+function openproviderpremiumdns_TerminateAccount(array $params)
+{
+    $controller = new AccountController();
+    return $controller->terminateAccount($params);
+}

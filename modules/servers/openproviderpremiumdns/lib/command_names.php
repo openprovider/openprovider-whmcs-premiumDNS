@@ -10,4 +10,5 @@ class ApiCommandNames
     const CREATE_ZONE_DNS_REQUEST = 'createZoneDnsRequest';
     const RETRIEVE_ZONE_DNS_REQUEST = 'retrieveZoneDnsRequest';
     const MODIFY_ZONE_DNS_REQUEST = 'modifyZoneDnsRequest';
+    const DELETE_ZONE_DNS_REQUEST = 'deleteZoneDnsRequest';
 }
