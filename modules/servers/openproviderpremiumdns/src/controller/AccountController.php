@@ -77,7 +77,6 @@ class AccountController
             return 'Zone deletion failed: ' . $deleteZoneResponse->getMessage();
         }
 
-        // ✅ Now directly update the WHMCS database
         try {
             Capsule::table('tblhosting')
                 ->where('id', $params['serviceid'])
