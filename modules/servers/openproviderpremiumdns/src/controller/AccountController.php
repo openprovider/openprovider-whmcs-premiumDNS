@@ -27,13 +27,13 @@ class AccountController
         try {
             $dnsZoneResponse = $moduleHelper->call(ApiCommandNames::RETRIEVE_ZONE_DNS_REQUEST, [
                 'name' => $params['domain'],
-                'provider' => 'sectigo'
+                'provider' => ZONE_PROVIDER_SECTIGO
             ]);
 
             if ($dnsZoneResponse->getCode() == 0) {
                 $modifyZoneResponse = $moduleHelper->call(ApiCommandNames::MODIFY_ZONE_DNS_REQUEST, [
                     'name' => $params['domain'],
-                    'provider' => 'sectigo',
+                    'provider' => ZONE_PROVIDER_SECTIGO,
                 ]);
                 if ($modifyZoneResponse->getCode() != 0) {
                     return $modifyZoneResponse->getMessage();
@@ -55,7 +55,7 @@ class AccountController
             'domain' => $domainArray,
             'records' => [],
             'type' => CREATE_DNS_ZONE_TYPE,
-            'provider' => 'sectigo',
+            'provider' => ZONE_PROVIDER_SECTIGO,
             'secured' => $isDNSSECEnabled,
         ]);
 
@@ -79,7 +79,7 @@ class AccountController
 
         $deleteZoneResponse = $moduleHelper->call(ApiCommandNames::DELETE_ZONE_DNS_REQUEST, [
             'name'     => $params['domain'],
-            'provider' => 'sectigo',
+            'provider' => ZONE_PROVIDER_SECTIGO,
         ]);
 
         if ($deleteZoneResponse->getCode() != 0) {
