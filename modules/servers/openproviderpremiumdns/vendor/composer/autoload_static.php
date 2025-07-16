@@ -392,6 +392,7 @@ class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
         'OpenproviderPremiumDns\\lib\\LastRequest' => __DIR__ . '/../..' . '/lib/last_request.php',
         'OpenproviderPremiumDns\\lib\\OpenproviderApi' => __DIR__ . '/../..' . '/lib/openprovider_api.php',
         'OpenproviderPremiumDns\\lib\\Response' => __DIR__ . '/../..' . '/lib/response.php',
+        'OpenproviderPremiumDns\\lib\\RestCurlApi' => __DIR__ . '/../..' . '/lib/rest_curl_api.php',
         'OpenproviderPremiumDns\\lib\\helpers\\IdnEncoder' => __DIR__ . '/../..' . '/lib/helpers/idn_encoder.php',
         'OpenproviderPremiumDns\\lib\\paramsBuilder\\CheckDomainsParamsCreator' => __DIR__ . '/../..' . '/lib/params_builder/check_domains_params_creator.php',
         'OpenproviderPremiumDns\\lib\\paramsBuilder\\ModifyDomainParamsCreator' => __DIR__ . '/../..' . '/lib/params_builder/modify_domain_params_creator.php',

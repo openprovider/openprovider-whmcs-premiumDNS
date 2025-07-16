@@ -4,6 +4,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'a
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'constants.php';
 
 use OpenproviderPremiumDns\controller\AccountController;
+use OpenproviderPremiumDns\controller\DNSController;
 
 if (!defined("WHMCS")) {
     die("This file cannot be accessed directly");
@@ -70,4 +71,40 @@ function openproviderpremiumdns_CreateAccount(array $params)
 {
     $controller = new AccountController();
     return $controller->createAccount($params);
+}
+
+/**
+ * Additional actions a client user can invoke.
+ *
+ * Define additional actions a client user can perform for an instance of a
+ * product/service.
+ *
+ * Any actions you define here will be automatically displayed in the available
+ * list of actions within the client area.
+ *
+ * @return array
+ */
+function openproviderpremiumdns_ClientAreaCustomButtonArray()
+{
+    return array(
+        "Manage PDNS" => "manage_pdns"
+    );
+}
+
+/**
+ * Custom function for performing manage pdns.
+ *
+ * Similar to all other module call functions, they should either return
+ * 'success' or an error message to be displayed.
+ *
+ * @param array $params common module parameters
+ *
+ * @see https://developers.whmcs.com/provisioning-modules/module-parameters/
+ *
+ * @return string "success" or an error message
+ */
+function openproviderpremiumdns_manage_pdns(array $params)
+{
+    $controller = new DNSController();
+    return $controller->showManagePdns($params);
 }

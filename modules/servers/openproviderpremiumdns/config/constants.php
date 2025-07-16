@@ -22,3 +22,6 @@ const ERROR_API_CLIENT_IS_NOT_CONFIGURED = 'Credentials are incorrect or api is 
 
 const ERROR_NO_PRODUCT_ID_IN_QUERY_PARAMS = 'You have no product id in query parameters: "pid" does not exist!';
 const ERROR_DOMAIN_NOT_FOUND_IN_OPENPROVIDER = 'This domain not found in Openprovider or something went wrong!';
+
+const ZONE_PROVIDER_SECTIGO = 'sectigo';
+const ZONE_PROVIDER_OPENPROVIDER = 'openprovider';
