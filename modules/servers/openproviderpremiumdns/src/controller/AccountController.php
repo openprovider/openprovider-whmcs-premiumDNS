@@ -23,23 +23,26 @@ class AccountController
 
         if (!$moduleHelper->initApi($username, $password)) {
             return ERROR_API_CLIENT_IS_NOT_CONFIGURED;
-        }
-
-        $dnsZoneResponse = $moduleHelper->call(ApiCommandNames::RETRIEVE_ZONE_DNS_REQUEST, [
-            'name' => $params['domain'],
-        ]);
-
-        if ($dnsZoneResponse->getCode() == 0) {
-            $modifyZoneResponse = $moduleHelper->call(ApiCommandNames::MODIFY_ZONE_DNS_REQUEST, [
+        } 
+        try {
+            $dnsZoneResponse = $moduleHelper->call(ApiCommandNames::RETRIEVE_ZONE_DNS_REQUEST, [
                 'name' => $params['domain'],
-                'provider' => 'sectigo',
+                'provider' => 'sectigo'
             ]);
 
-            if ($modifyZoneResponse->getCode() != 0) {
-                return $modifyZoneResponse->getMessage();
-            }
+            if ($dnsZoneResponse->getCode() == 0) {
+                $modifyZoneResponse = $moduleHelper->call(ApiCommandNames::MODIFY_ZONE_DNS_REQUEST, [
+                    'name' => $params['domain'],
+                    'provider' => 'sectigo',
+                ]);
+                if ($modifyZoneResponse->getCode() != 0) {
+                    return $modifyZoneResponse->getMessage();
+                }
 
-            return SUCCESS_MESSAGE;
+                return SUCCESS_MESSAGE;
+            }
+        } catch (Exception $e){
+            return $e->getMessage();
         }
 
         try {
