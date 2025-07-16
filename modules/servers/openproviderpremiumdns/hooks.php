@@ -5,6 +5,7 @@ require_once __DIR__ . '/openproviderpremiumdns.php';
 use WHMCS\Database\Capsule;
 use OpenproviderPremiumDns\helper\OpenproviderPremiumDnsModuleHelper;
 use OpenproviderPremiumDns\lib\ApiCommandNames;
+use WHMCS\View\Menu\Item as MenuItem;
 
 add_hook('ShoppingCartValidateDomain', 1, function($vars) {
     if ($vars['domainoption'] != 'owndomain') {
@@ -34,5 +35,17 @@ add_hook('ShoppingCartValidateDomain', 1, function($vars) {
 
     if ($domainRequest->getCode() != 0 || count($domainRequest->getData()['results']) == 0) {
         return ERROR_DOMAIN_NOT_FOUND_IN_OPENPROVIDER;
+    }
+});
+
+add_hook('ClientAreaPrimarySidebar', 1, function (MenuItem $primarySidebar) {
+    $serviceDetailsMenu = $primarySidebar->getChild('Service Details Actions');
+
+    if ($serviceDetailsMenu) {
+        $targetItem = $serviceDetailsMenu->getChild('Custom Module Button Activate/Deactivate DNSSEC');
+
+        if ($targetItem) {
+            $serviceDetailsMenu->removeChild('Custom Module Button Activate/Deactivate DNSSEC');
+        }
     }
 });
