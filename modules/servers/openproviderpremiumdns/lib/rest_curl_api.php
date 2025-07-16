@@ -24,59 +24,6 @@ class RestCurlApi
 
     public function generateToken(string $username, string $password)
     {
-        // $tokenResult = null;
-
-        // if (Capsule::schema()->hasTable('reseller_tokens')) {
-        //     $tokenResult = Capsule::table('reseller_tokens')->where('username', $username)->orderBy('created_at', 'desc')->first();
-        // } else {
-        //     Capsule::schema()->create(
-        //         'reseller_tokens',
-        //         function ($table) {
-        //             /** @var \Illuminate\Database\Schema\Blueprint $table */
-        //             $table->increments('id');
-        //             $table->string('username');
-        //             $table->string('token');
-        //             $table->string('expire_at');
-        //             $table->string('created_at');
-        //         }
-        //     );
-        // }
-
-        // $expireTime = $tokenResult ? new Carbon($tokenResult->expire_at) : false;
-        // $isAlive = $expireTime && Carbon::now()->diffInSeconds($expireTime, false) > 0;
-
-        // $token = "";
-        // if ($isAlive) {
-        //     $token = $tokenResult->token;
-        // } else {
-        //     Capsule::table('reseller_tokens')->where('username', $username)->delete();
-
-        //     if (!Cache::has('op_auth_generate')) {
-        //         $data = array(
-        //             'username' => $username,
-        //             'password' => "$password",
-        //         );
-        //         $this->apiUrl = 'https://' . $this->url . '/v1beta/auth/login';
-        //         $header = array(
-        //             'Content-Type: application/json',
-        //         );
-        //         $res =  $this->__curlCall("POST", $data, $this->apiUrl, $header, "Generate Token");
-
-        //         $token = json_encode($res)['result']['data']['token'];
-
-        //         if ($token) {
-        //             Capsule::table('reseller_tokens')->insert([
-        //                 'username' => $params['Username'],
-        //                 'token' => $token,
-        //                 'expire_at' => Carbon::now()->addDays(AUTH_TOKEN_EXPIRATION_LIFE_TIME)->toDateTimeString(),
-        //                 'created_at' => Carbon::now()->toDateTimeString()
-        //             ]);
-
-        //         }
-        //     }
-            
-        // }
-
         try {
             
             $data = array(
