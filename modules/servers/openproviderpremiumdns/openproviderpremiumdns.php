@@ -4,6 +4,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'a
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'constants.php';
 
 use OpenproviderPremiumDns\controller\AccountController;
+use OpenproviderPremiumDns\controller\DNSController;
 
 if (!defined("WHMCS")) {
     die("This file cannot be accessed directly");
@@ -91,8 +92,38 @@ function openproviderpremiumdns_ClientAreaCustomButtonArray()
     );
 }
 
+/**
+ * Custom function for performing delete premium dns zone.
+ *
+ * Similar to all other module call functions, they should either return
+ * 'success' or an error message to be displayed.
+ *
+ * @param array $params common module parameters
+ *
+ * @see https://developers.whmcs.com/provisioning-modules/module-parameters/
+ *
+ * @return string "success" or an error message
+ */
 function openproviderpremiumdns_TerminateAccount(array $params)
 {
     $controller = new AccountController();
     return $controller->terminateAccount($params);
+}
+
+/**
+ * Custom function for performing manage pdns.
+ *
+ * Similar to all other module call functions, they should either return
+ * 'success' or an error message to be displayed.
+ *
+ * @param array $params common module parameters
+ *
+ * @see https://developers.whmcs.com/provisioning-modules/module-parameters/
+ *
+ * @return string "success" or an error message
+ */
+function openproviderpremiumdns_manage_pdns(array $params)
+{
+    $controller = new DNSController();
+    return $controller->showManagePdns($params);
 }
