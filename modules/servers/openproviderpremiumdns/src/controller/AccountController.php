@@ -21,6 +21,7 @@ class AccountController
         try {
             $dnsZoneResponse = $moduleHelper->call(ApiCommandNames::RETRIEVE_ZONE_DNS_REQUEST, [
                 'name' => $params['domain'],
+                'provider' => 'sectigo'
             ]);
 
             if ($dnsZoneResponse->getCode() == 0) {
