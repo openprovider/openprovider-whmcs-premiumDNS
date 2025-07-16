@@ -4,6 +4,7 @@ namespace OpenproviderPremiumDns\controller;
 
 use OpenproviderPremiumDns\helper\OpenproviderPremiumDnsModuleHelper;
 use OpenproviderPremiumDns\lib\ApiCommandNames;
+use WHMCS\Database\Capsule;
 use Exception;
 
 class AccountController
@@ -54,5 +55,40 @@ class AccountController
         }
 
         return SUCCESS_MESSAGE;
+    }
+
+    public function terminateAccount(array $params): string
+    {
+        $username = $params['configoption1'];
+        $password = $params['configoption2'];
+
+        $moduleHelper = new OpenproviderPremiumDnsModuleHelper();
+
+        if (!$moduleHelper->initApi($username, $password)) {
+            return ERROR_API_CLIENT_IS_NOT_CONFIGURED;
+        }
+
+        $deleteZoneResponse = $moduleHelper->call(ApiCommandNames::DELETE_ZONE_DNS_REQUEST, [
+            'name'     => $params['domain'],
+            'provider' => 'sectigo',
+        ]);
+
+        if ($deleteZoneResponse->getCode() != 0) {
+            return 'Zone deletion failed: ' . $deleteZoneResponse->getMessage();
+        }
+
+        try {
+            Capsule::table('tblhosting')
+                ->where('id', $params['serviceid'])
+                ->update([
+                    'domainstatus'    => 'Terminated',
+                    'termination_date' => date('Y-m-d'),
+                    'nextduedate'     => '0000-00-00',
+                ]);
+
+            return SUCCESS_MESSAGE;
+        } catch (Exception $e) {
+            return 'Zone deleted, but DB termination failed: ' . $e->getMessage();
+        }
     }
 }

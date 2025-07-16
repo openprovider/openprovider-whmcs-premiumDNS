@@ -87,8 +87,27 @@ function openproviderpremiumdns_CreateAccount(array $params)
 function openproviderpremiumdns_ClientAreaCustomButtonArray()
 {
     return array(
-        "Manage PDNS" => "manage_pdns"
+        "Manage PDNS" => "manage_pdns",
+        "Delete PDNS Zone" => "TerminateAccount"
     );
+}
+
+/**
+ * Custom function for performing delete premium dns zone.
+ *
+ * Similar to all other module call functions, they should either return
+ * 'success' or an error message to be displayed.
+ *
+ * @param array $params common module parameters
+ *
+ * @see https://developers.whmcs.com/provisioning-modules/module-parameters/
+ *
+ * @return string "success" or an error message
+ */
+function openproviderpremiumdns_TerminateAccount(array $params)
+{
+    $controller = new AccountController();
+    return $controller->terminateAccount($params);
 }
 
 /**
