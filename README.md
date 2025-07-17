@@ -44,6 +44,30 @@ integrated and easy to adopt solution that offers the following advantages to yo
 
 The Premium DNS module can be used with domains from any registrar, not only domains with Openprovider. 
 
+## Features
+
+The Openprovider Premium DNS WHMCS module provides a comprehensive set of features to manage Premium DNS zones directly from WHMCS:
+
+- **Create Premium DNS Zone**
+  - Automatically create a Premium DNS zone when registering a new domain
+  - Enable Premium DNS during domain transfer
+  - Set up Premium DNS for existing domains
+
+- **View DNS Zone**
+  - Retrieve and display existing Premium DNS zone details within WHMCS client area
+
+- **Manage DNS Zone**
+  - Navigate to and manage your Premium DNS zone via an integrated DNS panel
+
+- **DNSSEC Management**
+  - Activate or deactivate DNSSEC for Premium DNS zones
+  - View DNSSEC records and DNSSEC status
+  - Optionally users can **enable DNSSEC** during zone creation
+
+- **Delete Premium DNS Zone**
+  - Delete Premium DNS zones directly through the WHMCS client area
+
+These features are built to ensure automation, flexibility, and security for your DNS management workflows.
 
 
 ## Configure premium DNS product
