@@ -122,3 +122,22 @@ The below example shows one way the provisioning module can work from the end us
 ![img](images/end_user_workflow_step3)
 
 - Once the customer completes the purchase, the module will provision the premium DNS zone in your Openprovider account. 
+
+## Client Area Premium DNS Product Features
+
+Once a Premium DNS product is provisioned, clients can manage their service directly from the WHMCS client area. The module provides the following interactive options under the **Actions** panel:
+
+![img](images/end_user_workflow_features1)
+
+- **Manage PDNS**  
+  Redirects the user to dnspanel in a new browser tab, allowing them to view and manage DNS records using dnspanel's DNS management interface.
+
+- **Manage DNSSEC**  
+  Opens a WHMCS-integrated screen where users can activate or deactivate DNSSEC for their Premium DNS zone. If DNSSEC is already enabled, the generated DNSSEC key will be displayed.
+
+![img](images/end_user_workflow_features2)
+
+- **Delete PDNS Zone**  
+  Allows clients to delete the associated Premium DNS zone directly from the client area.
+
+These features empower your clients with full control over their DNS configurations without requiring administrative intervention.
