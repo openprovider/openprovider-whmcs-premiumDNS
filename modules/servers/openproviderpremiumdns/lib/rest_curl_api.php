@@ -2,8 +2,6 @@
 
 namespace OpenproviderPremiumDns\lib;
 
-use Carbon\Carbon;
-use WHMCS\Database\Capsule;
 use OpenproviderPremiumDns\lib\ApiCommandNames;
 
 if (!defined("WHMCS")) {
@@ -33,6 +31,7 @@ class RestCurlApi
             $this->apiUrl = $this->url . '/v1beta/auth/login';
             $header = array(
                 'Content-Type: application/json',
+                'X-Client: ' . $this->apiSettings->getClientName()
             );
 
             $res =  $this->__curlCall("POST", $data, $this->apiUrl, $header, ApiCommandNames::GENERATE_AUTH_TOKEN_REQUEST);
@@ -68,7 +67,8 @@ class RestCurlApi
             $this->apiUrl = $this->url . '/v1beta/dns/domain-token';
             $header = array(
                 'Content-Type: application/json',
-                'Authorization: Bearer ' . $token
+                'Authorization: Bearer ' . $token,
+                'X-Client: ' . $this->apiSettings->getClientName()
             );
             $data = array(
                 'domain' => $params['domain'],
