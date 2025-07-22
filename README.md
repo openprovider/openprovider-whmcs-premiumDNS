@@ -90,8 +90,12 @@ These features are built to ensure automation, flexibility, and security for you
 - Under the *module settings* tab, enter the credentials for the Openprovider account with which you’d like to provision premium DNS. Select your desired automation settings for provisioning this product.
 
 
-
 ![img](images/create_new_product_step3)
+
+- Under the *Custom Fields* tab, add a new field with the **Field Name** set to `DNSSEC`, **Field Type** as `Checkbox`, and a **Description** of your choice — this allows clients to enable DNSSEC during order placement if desired or later with client area Premium DNS zone management. Check the **Show on Order Form** box to make this option visible to clients during the ordering process.
+
+
+![img](images/create_new_product_step4)
 
 - Configure any other parameters of the product which you deem necessary and then you're ready to start offering premium DNS to your customers.
 
@@ -113,6 +117,8 @@ The below example shows one way the provisioning module can work from the end us
 
 ![img](images/end_user_workflow_step2)
 
+- During checkout, users can optionally enable DNSSEC by selecting the checkbox provided if you have configured the DNSSEC custom field to appear on the order form.
 
+![img](images/end_user_workflow_step3)
 
 - Once the customer completes the purchase, the module will provision the premium DNS zone in your Openprovider account. 
