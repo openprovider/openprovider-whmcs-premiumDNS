@@ -31,7 +31,7 @@ class DNSSECController
 
             $isDnssecEnabled = $dnsZoneResponse->getData()['premium_dns']['sectigo']['secured'] ?? false;
 
-            $dnssecKeys = $dnsZoneResponse->getData()['dnskey'] ?? [];
+            $dnssecKeys = $dnsZoneResponse->getData()['dnskey'] ?? "";
 
             // split the dnssecKeys string into an array
             $dnssecKeysArray = explode(" ", $dnssecKeys);
