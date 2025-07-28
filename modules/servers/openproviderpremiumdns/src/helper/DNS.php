@@ -14,19 +14,8 @@ class DNS
      */
     public static function getDnsUrlOrFail($params)
     {
-        $domainName = $params['domain'];
-
-        // Lookup domain in tbldomains table
-        $domain = Capsule::table('tbldomains')
-            ->where('domain', $domainName)
-            ->first();
-
-        // Check if OpenProvider is the provider
-        if ($domain->registrar != 'openprovider' || $domain->status != 'Active')
-            return false;
-
-        // Getet the URL.
         try {
+            // Get the URL.
             $restCurlApi = new RestCurlApi();
 
             $getDnsSingleDomainTokenUrlResponse = $restCurlApi->getDnsSingleDomainTokenUrl($params);
