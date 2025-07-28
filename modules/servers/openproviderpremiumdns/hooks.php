@@ -49,3 +49,46 @@ add_hook('ClientAreaPrimarySidebar', 1, function (MenuItem $primarySidebar) {
         }
     }
 });
+
+add_hook('ClientAreaHeadOutput', 1, function ($vars) {
+    return <<<HTML
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const deleteBtn = document.querySelector("a[menuitemname='Custom Module Button Delete PDNS Zone']");
+    if (deleteBtn) {
+        deleteBtn.addEventListener("click", function (e) {
+            const confirmed = confirm("⚠️ Are you sure you want to delete this PDNS zone? This action cannot be undone.");
+            if (!confirmed) {
+                e.preventDefault();
+            }
+        });
+    }
+});
+</script>
+HTML;
+});
+
+add_hook('ClientAreaProductDetailsOutput', 1, function ($vars) {
+    $output = '';
+
+    if (isset($_GET['a']) && $_GET['a'] === 'TerminateAccount') {
+        $output .= <<<HTML
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const msg = document.querySelector(".alert-success");
+        if (msg) {
+            setTimeout(function () {
+                window.location.href = window.location.pathname + window.location.search.replace("&a=TerminateAccount", "") + "&deleted=1";
+            }, 1500);
+        }
+    });
+</script>
+HTML;
+    }
+
+    if (isset($_GET['deleted']) && $_GET['deleted'] == 1) {
+        $output .= '<div class="alert alert-success">Zone deleted successfully.</div>';
+    }
+
+    return $output;
+});
