@@ -15,7 +15,7 @@ class AccountController
         $password = $params['configoption2'];
 
         $isDNSSECEnabled = (
-            isset($params['customfields']["DNSSEC_CUSTOM_FIELD_NAME"]) &&
+            isset($params['customfields'][DNSSEC_CUSTOM_FIELD_NAME]) &&
             $params['customfields'][DNSSEC_CUSTOM_FIELD_NAME] === 'on'
         ) ? true : false;
 
