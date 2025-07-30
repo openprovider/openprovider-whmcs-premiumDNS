@@ -52,10 +52,12 @@ add_hook('ClientAreaPrimarySidebar', 1, function (MenuItem $primarySidebar) {
 
 
 add_hook('ClientAreaHeadOutput', 1, function ($vars) {
+    $moduleCheckForOrderPage = isset($vars['productinfo']['module']) && strtolower($vars['productinfo']['module']) == MODULE_IDENTIFIER;
+    $moduleCheckForProductPage = isset($vars['module']) && strtolower($vars['module']) == MODULE_IDENTIFIER;
+
     // Check if product module matches
     if (
-        !isset($vars['productinfo']['module']) ||
-        strtolower($vars['productinfo']['module']) !== MODULE_IDENTIFIER
+        !$moduleCheckForOrderPage && !$moduleCheckForProductPage
     ) {
         return; // Don't run this header
     }
