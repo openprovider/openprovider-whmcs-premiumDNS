@@ -50,22 +50,117 @@ add_hook('ClientAreaPrimarySidebar', 1, function (MenuItem $primarySidebar) {
     }
 });
 
+
 add_hook('ClientAreaHeadOutput', 1, function ($vars) {
-    return <<<HTML
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const deleteBtn = document.querySelector("a[menuitemname='Custom Module Button Delete PDNS Zone']");
-    if (deleteBtn) {
-        deleteBtn.addEventListener("click", function (e) {
-            const confirmed = confirm("⚠️ Are you sure you want to delete this PDNS zone? This action cannot be undone.");
-            if (!confirmed) {
-                e.preventDefault();
-            }
-        });
+    // Check if product module matches
+    if (
+        !isset($vars['productinfo']['module']) ||
+        strtolower($vars['productinfo']['module']) !== MODULE_IDENTIFIER
+    ) {
+        return; // Don't run this header
     }
-});
-</script>
-HTML;
+
+    return <<<HTML
+                <style>
+                /* PremiumDNS banner styling */
+                #nameserver-warning {
+                    display: none; /* only show when the 3rd option is selected */
+                    margin: 10px 0 0;
+                    padding: 10px 12px;
+                    background: #fff3cd;          /* Bootstrap-like warning background */
+                    border: 1px solid #ffeeba;
+                    color: #856404;
+                    border-radius: 6px;
+                    line-height: 1.45;
+                }
+                #nameserver-warning strong { font-weight: 600; }
+                #nameserver-warning .ns-list { margin: 6px 0 0 0; padding-left: 18px; }
+                </style>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        // ===== confirm before deleting a PDNS zone =====
+                        const deleteBtn = document.querySelector("a[menuitemname='Custom Module Button Delete PDNS Zone']");
+                        if (deleteBtn) {
+                            deleteBtn.addEventListener("click", function (e) {
+                                const confirmed = confirm("⚠️ Are you sure you want to delete this PDNS zone? This action cannot be undone.");
+                                if (!confirmed) {
+                                    e.preventDefault();
+                                }
+                            });
+                        }
+
+                        // ===== Banner for the 3rd flow: "I will use my existing domain and update my nameservers" =====
+                        const ownDomainInput = document.querySelector("input[name='domainoption'][value='owndomain']");
+                        if (!ownDomainInput) return;
+
+                        const optionBlock   = ownDomainInput.closest(".option"); // wrapper that toggles .option-selected
+                        const icheckDiv     = document.getElementById("iCheck-selowndomain"); // iCheck wrapper that toggles .checked
+                        const ownDomainGrp  = document.getElementById("domainowndomain");     // section that toggles display: block/none
+
+                        // Reuse an existing banner if present in markup, otherwise create it after the label
+                        let banner = document.getElementById("nameserver-warning");
+                        if (!banner) {
+                            banner = document.createElement("div");
+                            banner.id = "nameserver-warning";
+                            banner.setAttribute("role", "alert");
+                            banner.innerHTML =
+                                "<strong>Important:</strong> After your Premium DNS Zone is created, you must " +
+                                "<b>manually update your domain\\'s nameservers</b> to point to PremiumDNS Zone nameservers. " +
+                                "Until you update nameservers, DNS for this domain will continue to resolve via your old provider.";
+                            // insert right under the label inside the same option block
+                            const label = ownDomainInput.closest("label");
+                            if (label) {
+                                label.insertAdjacentElement("afterend", banner);
+                            } else if (optionBlock) {
+                                optionBlock.insertAdjacentElement("afterbegin", banner);
+                            } else {
+                                // last resort
+                                ownDomainInput.parentElement.insertAdjacentElement("afterend", banner);
+                            }
+                        }
+
+                        // Visibility-only detection: no use of input.checked
+                        function isOwnDomainSelected() {
+                            // 1) The option block gets .option-selected when chosen
+                            if (optionBlock && optionBlock.classList.contains("option-selected")) return true;
+
+                            // 2) iCheck wrapper adds .checked when chosen (visible class change)
+                            if (icheckDiv && icheckDiv.classList.contains("checked")) return true;
+
+                            // 3) The "own domain" input group becomes visible when chosen
+                            if (ownDomainGrp) {
+                                const style = window.getComputedStyle(ownDomainGrp);
+                                if (style.display !== "none") return true;
+                            }
+                            return false;
+                        }
+
+                        function syncBanner() {
+                            banner.style.display = isOwnDomainSelected() ? "block" : "none";
+                        }
+
+                        // Initial state
+                        syncBanner();
+
+                        // Listen for native radio changes on the domainoption group
+                        document.querySelectorAll("input[name='domainoption']").forEach(function (radio) {
+                            radio.addEventListener("change", syncBanner);
+                        });
+
+                        // Observe class changes on elements that visually reflect selection
+                        if (optionBlock) {
+                            new MutationObserver(syncBanner).observe(optionBlock, { attributes: true, attributeFilter: ["class"] });
+                        }
+                        if (icheckDiv) {
+                            new MutationObserver(syncBanner).observe(icheckDiv, { attributes: true, attributeFilter: ["class"] });
+                        }
+                        if (ownDomainGrp) {
+                            new MutationObserver(syncBanner).observe(ownDomainGrp, { attributes: true, attributeFilter: ["style", "class"] });
+                        }
+                    });
+                </script>
+            HTML;
 });
 
 add_hook('ClientAreaProductDetailsOutput', 1, function ($vars) {
