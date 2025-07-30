@@ -15,8 +15,9 @@ service to your hosting services portfolio.
 ## Installation
 
  1. Copy the contents of `/modules/servers/openproviderpremiumdns` into `<WHMCS directory>/modules/servers/openproviderpremiumdns` 
- 2. Set up a product with the Openprovider-premiumDNS module (make sure to require a domain) and start selling.
- 3. Note that there is no test environment and records created with the premium DNS module will be billed to your Openprovider account.
+ 2. Set up a server and server group for the Openprovider PremiumDNS module in WHMCS.
+ 3. Set up a product with the Openprovider-premiumDNS module (make sure to require a domain) and start selling.
+ 4. Note that there is no test environment and records created with the premium DNS module will be billed to your Openprovider account.
 
 
 
@@ -69,6 +70,41 @@ The Openprovider Premium DNS WHMCS module provides a comprehensive set of featur
 
 These features are built to ensure automation, flexibility, and security for your DNS management workflows.
 
+## Configure the server module
+
+1. From your WHMCS admin area, navigate to **System Settings > Servers**.  
+
+![img](images/configure_server_1)
+
+2. Click **Add New Server**, then select **Go to Advanced Mode**.  
+
+![img](images/configure_server_2)
+
+3. Add the server for API connectivity with the following details:  
+   - **Name:** For example, `openprovider premiumDNS server`  
+   - **Hostname:** `api.openprovider.eu`  
+   - **Nameservers:**  
+     ```
+     ns1.sectigoweb.com  
+     ns2.sectigoweb.com  
+     ns3.sectigoweb.com  
+     ns4.sectigoweb.com
+     ```  
+   - **Module:** Select `Openprovider PremiumDNS module`  
+   - **Username:** Your Openprovider username  
+   - **Password:** Your Openprovider password  
+  
+    ![img](images/configure_server_3)
+
+    ![img](images/configure_server_4)
+
+4. Once complete, click **Save Changes**.  
+5. After the server is created, click **Create New Group**, provide a group name, assign the server you just created to the group, and **Save Changes**.  
+
+![img](images/configure_server_5)
+
+![img](images/configure_server_6)
+
 
 ## Configure premium DNS product
 
@@ -87,7 +123,12 @@ These features are built to ensure automation, flexibility, and security for you
 
 - Set up pricing on the pricing tab. Consult your Openprovider account to determine the cost price for provisioning premium DNS.
 
-- Under the *module settings* tab, enter the credentials for the Openprovider account with which you’d like to provision premium DNS. Select your desired automation settings for provisioning this product.
+- Under the **Module Settings** tab:  
+
+1. Select **Openprovider PremiumDNS** as the **Module Name**.  
+2. Select the **Server Group** that you created with the PremiumDNS server added.  
+3. Enter the credentials for the Openprovider account you would like to use for provisioning PremiumDNS.  
+4. Select your desired **Automation Settings** for provisioning this product.  
 
 
 ![img](images/create_new_product_step3)
