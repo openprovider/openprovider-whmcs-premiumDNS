@@ -108,8 +108,14 @@ add_hook('ClientAreaHeadOutput', 1, function ($vars) {
                             banner.setAttribute("role", "alert");
                             banner.innerHTML =
                                 "<strong>Important:</strong> After your Premium DNS Zone is created, you must " +
-                                "<b>manually update your domain\\'s nameservers</b> to point to PremiumDNS Zone nameservers. " +
-                                "Until you update nameservers, DNS for this domain will continue to resolve via your old provider.";
+                                "<b>manually update your domain's nameservers</b> to point to PremiumDNS Zone nameservers. " +
+                                "Until you update nameservers, DNS for this domain will continue to resolve via your old provider." +
+                                "<ul style='margin-top:8px; padding-left:18px;'>" +
+                                "<li><strong>ns1.sectigoweb.com</strong></li>" +
+                                "<li><strong>ns2.sectigoweb.com</strong></li>" +
+                                "<li><strong>ns3.sectigoweb.com</strong></li>" +
+                                "<li><strong>ns4.sectigoweb.com</strong></li>" +
+                                "</ul>";
                             // insert right under the label inside the same option block
                             const label = ownDomainInput.closest("label");
                             if (label) {
