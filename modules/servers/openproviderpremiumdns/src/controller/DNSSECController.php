@@ -15,7 +15,7 @@ class DNSSECController
         try {
             $moduleHelper = new OpenproviderPremiumDnsModuleHelper();
 
-            if (!$moduleHelper->initApi($params['configoption1'], $params['configoption2'])) {
+            if (!$moduleHelper->initApi($params['configoption1'], localAPI('DecryptPassword', ['password2' => $params['configoption2']])['password'])) {
                 throw new Exception('Failed to initialize Authentication API');
             }
 
@@ -70,7 +70,7 @@ class DNSSECController
         try {
             $moduleHelper = new OpenproviderPremiumDnsModuleHelper();
 
-            if (!$moduleHelper->initApi($params['configoption1'], $params['configoption2'])) {
+            if (!$moduleHelper->initApi($params['configoption1'], localAPI('DecryptPassword', ['password2' => $params['configoption2']])['password'])) {
                 throw new \Exception('Failed to initialize API');
             }
 
