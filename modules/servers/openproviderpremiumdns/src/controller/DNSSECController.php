@@ -54,9 +54,9 @@ class DNSSECController
             \logModuleCall(
                 MODULE_NAME,
                 __FUNCTION__,
-                $params,
                 $e->getMessage(),
-                $e->getTraceAsString()
+                $e->getTraceAsString(),
+                null
             );
 
             return $e->getMessage();
