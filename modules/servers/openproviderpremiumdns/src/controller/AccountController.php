@@ -12,7 +12,7 @@ class AccountController
     public function createAccount(array $params): string
     {
         $username = $params['configoption1'];
-        $password = $params['configoption2'];
+        $password = localAPI('DecryptPassword', ['password2' => $params['configoption2']])['password'];
 
         $isDNSSECEnabled = (
             isset($params['customfields'][DNSSEC_CUSTOM_FIELD_NAME]) &&
@@ -69,7 +69,7 @@ class AccountController
     public function terminateAccount(array $params): string
     {
         $username = $params['configoption1'];
-        $password = $params['configoption2'];
+        $password = localAPI('DecryptPassword', ['password2' => $params['configoption2']])['password'];
 
         $moduleHelper = new OpenproviderPremiumDnsModuleHelper();
 

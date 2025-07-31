@@ -59,7 +59,7 @@ class RestCurlApi
     public function getDnsSingleDomainTokenUrl($params)
     {
         try {
-            $token = $this->generateToken($params['configoption1'], $params['configoption2']);
+            $token = $this->generateToken($params['configoption1'], localAPI('DecryptPassword', ['password2' => $params['configoption2']])['password']);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }

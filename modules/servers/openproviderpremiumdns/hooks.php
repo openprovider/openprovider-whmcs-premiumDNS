@@ -21,7 +21,7 @@ add_hook('ShoppingCartValidateDomain', 1, function($vars) {
         ->where('id', $productId)
         ->first();
     $username = $productRow->configoption1;
-    $password = $productRow->configoption2;
+    $password = localAPI('DecryptPassword', ['password2' => $productRow->configoption2])['password'];
 
     $moduleHelper = new OpenproviderPremiumDnsModuleHelper();
 
@@ -176,17 +176,17 @@ add_hook('ClientAreaProductDetailsOutput', 1, function ($vars) {
 
     if (isset($_GET['a']) && $_GET['a'] === 'TerminateAccount') {
         $output .= <<<HTML
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const msg = document.querySelector(".alert-success");
-        if (msg) {
-            setTimeout(function () {
-                window.location.href = window.location.pathname + window.location.search.replace("&a=TerminateAccount", "") + "&deleted=1";
-            }, 1500);
-        }
-    });
-</script>
-HTML;
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                const msg = document.querySelector(".alert-success");
+                                if (msg) {
+                                    setTimeout(function () {
+                                        window.location.href = window.location.pathname + window.location.search.replace("&a=TerminateAccount", "") + "&deleted=1";
+                                    }, 1500);
+                                }
+                            });
+                        </script>
+                    HTML;
     }
 
     if (isset($_GET['deleted']) && $_GET['deleted'] == 1) {
@@ -194,4 +194,123 @@ HTML;
     }
 
     return $output;
+});
+
+add_hook('AdminProductConfigFieldsSave', 1, function ($vars) {
+    $productId = (int)($vars['pid'] ?? 0);
+
+    if ($productId <= 0) {
+        return;
+    }
+
+    $product = Capsule::table('tblproducts')
+        ->where('id', $productId)
+        ->first() ?: null;
+
+    if (!$product || strtolower($product->servertype) !== MODULE_IDENTIFIER) {
+        return;
+    }
+
+    $index = 2;
+
+    // Pull raw posted value for this config option, if any.
+    $posted = $_POST['packageconfigoption'][$index] ?? null;
+
+    // Defer final write until after WHMCS finishes its own save.
+    register_shutdown_function(function () use ($productId, $index, $posted) {
+        try {
+            // Only act on a real new value (not masked/empty/missing).
+            if ($posted === null || $posted === '') {
+                return;
+            }
+
+            $enc = localAPI('EncryptPassword', ['password2' => (string)$posted])['password'] ?? '';
+            if ($enc) {
+                $col = 'configoption2';
+                Capsule::table('tblproducts')->where('id', $productId)->update([$col => $enc]);
+            }
+        } catch (\Throwable $e) {
+            // Swallow; never interrupt admin save
+        }
+    });
+});
+
+add_hook('AdminAreaFooterOutput', 1, function ($vars) {
+    if (($vars['filename'] ?? '') !== 'configproducts') return '';
+
+    $productId = (int) ($_GET['id'] ?? 0);
+    if ($productId <= 0) return '';
+
+    $product = Capsule::table('tblproducts')->where('id', $productId)->first();
+    if (!$product || strtolower($product->servertype) !== MODULE_IDENTIFIER) {
+        return '';
+    }
+
+    $stored = (string) ($product->configoption2 ?? '');
+    if ($stored === '') return '';
+
+    // Decrypt to plaintext for UI
+    $plaintext = localAPI('DecryptPassword', ['password2' => $stored])['password'] ?? null;
+    if (!is_string($plaintext) || $plaintext === '') return '';
+
+    $passwordSelector = 'input[type="password"]';
+    $labelHint = 'Openprovider';
+
+    $jsValue    = json_encode($plaintext, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+    $jsSelector = json_encode($passwordSelector, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+    $jsHint     = json_encode($labelHint, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+
+    return <<<HTML
+                <script>
+                    (function(){
+                        var decrypted = {$jsValue};
+                        var fallbackSelector = {$jsSelector};
+                        var hint = {$jsHint};
+
+                        function looksMasked(v){ return typeof v==='string' && /^\\*{6,}\$/.test(v); }
+
+                        function findField() {
+                            var all = document.querySelectorAll('input[type="password"]');
+                            for (var i=0;i<all.length;i++){
+                                var el = all[i];
+                                var td = el.closest('td');
+                                var txt = (td ? td.textContent : '') || '';
+                                if (txt.toLowerCase().indexOf(hint.toLowerCase()) !== -1) {
+                                    return el;
+                                }
+                            }
+                            return document.querySelector(fallbackSelector);
+                        }
+
+                        function setPassword(){
+                            var el = findField();
+                            if (!el) return false;
+                            if ((!el.value || looksMasked(el.value)) && decrypted) {
+                                el.value = decrypted;
+                                try {
+                                    el.dispatchEvent(new Event('input', { bubbles: true }));
+                                    el.dispatchEvent(new Event('change', { bubbles: true }));
+                                } catch (e) {}
+                            }
+                            return true;
+                        }
+
+                        if (!setPassword()) {
+                            var tries = 0, iv = setInterval(function(){
+                                if (setPassword() || ++tries > 10) { clearInterval(iv); }
+                            }, 200);
+                        }
+
+                        document.addEventListener('shown.bs.tab', function () {
+                            setTimeout(setPassword, 100);
+                        }, true);
+
+                        var target = document.getElementById('tab2') || document.getElementById('ModuleSettings') || document.body;
+                        if (target && window.MutationObserver) {
+                            var mo = new MutationObserver(function(){ setPassword(); });
+                            mo.observe(target, { childList:true, subtree:true });
+                        }
+                    })();
+                </script>
+            HTML;
 });
