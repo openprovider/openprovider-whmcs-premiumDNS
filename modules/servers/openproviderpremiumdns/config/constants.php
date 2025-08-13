@@ -5,6 +5,7 @@ const CREATE_DNS_ZONE_TYPE = 'master';
 const SUCCESS_MESSAGE = 'success';
 
 const MODULE_NAME = 'Openprovider PremiumDNS';
+const MODULE_IDENTIFIER = 'openproviderpremiumdns';
 const API_VERSION = '2.0'; // Use API Version 2.0
 const REQUIRES_SERVER = true; // Set true if module requires a server to work
 const DEFAULT_NON_SSL_PORT = '1111'; // Default Non-SSL Connection Port
@@ -26,3 +27,5 @@ const ERROR_DOMAIN_NOT_FOUND_IN_OPENPROVIDER = 'This domain not found in Openpro
 const ZONE_PROVIDER_SECTIGO = 'sectigo';
 const ZONE_PROVIDER_OPENPROVIDER = 'openprovider';
 const DNSSEC_CUSTOM_FIELD_NAME = 'DNSSEC';
+
+const ENC_PREFIX = 'ENC::';
