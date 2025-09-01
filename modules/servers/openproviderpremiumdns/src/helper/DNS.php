@@ -2,7 +2,6 @@
 
 namespace OpenproviderPremiumDns\helper;
 
-use WHMCS\Database\Capsule;
 use OpenproviderPremiumDns\lib\RestCurlApi;
 
 class DNS

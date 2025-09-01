@@ -62,15 +62,6 @@ class DNSSECController
                 'jsModuleUrl' => Configuration::getJsModuleUrl('dnssec'),
             ]];
         } catch (Exception $e) {
-            // Record the error in WHMCS's module log.
-            \logModuleCall(
-                MODULE_NAME,
-                __FUNCTION__,
-                $e->getMessage(),
-                $e->getTraceAsString(),
-                null
-            );
-
             return $e->getMessage();
         }
 
@@ -163,15 +154,6 @@ class DNSSECController
                 }
             }
         } catch (Exception $e) {
-            // Record the error in WHMCS's module log.
-            \logModuleCall(
-                MODULE_NAME,
-                __FUNCTION__,
-                $params,
-                $e->getMessage(),
-                $e->getTraceAsString()
-            );
-
             return $e->getMessage();
         }
 

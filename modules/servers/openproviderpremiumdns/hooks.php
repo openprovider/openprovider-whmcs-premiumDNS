@@ -2,7 +2,6 @@
 
 require_once __DIR__ . '/openproviderpremiumdns.php';
 
-use WHMCS\Database\Capsule;
 use OpenproviderPremiumDns\helper\OpenproviderPremiumDnsModuleHelper;
 use OpenproviderPremiumDns\lib\ApiCommandNames;
 use WHMCS\View\Menu\Item as MenuItem;
