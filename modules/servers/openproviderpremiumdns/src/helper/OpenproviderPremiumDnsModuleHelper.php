@@ -5,6 +5,7 @@ namespace OpenproviderPremiumDns\helper;
 use OpenproviderPremiumDns\lib\ApiCommandNames;
 use OpenproviderPremiumDns\lib\OpenproviderApi;
 use OpenproviderPremiumDns\lib\Response;
+use WHMCS\Database\Capsule;
 
 class OpenproviderPremiumDnsModuleHelper
 {
@@ -132,6 +133,54 @@ class OpenproviderPremiumDnsModuleHelper
         return [
             'name'      => $domainSld,
             'extension' => $domainTld
+        ];
+    }
+
+    /**
+     * Get server credentials (username/password) for a product.
+     *
+     * @param int $productId
+     * @return array{username:string,password:string}
+     */
+    public function getCredentials(int $productId): array
+    {
+        // Find product & its server group
+        $product = Capsule::table('tblproducts')
+            ->select('servergroup')
+            ->where('id', $productId)
+            ->first();
+
+        if (!$product || !$product->servergroup) {
+            return ['username' => '', 'password' => ''];
+        }
+
+        // Pick a server from that group (first non-disabled)
+        $server = Capsule::table('tblservergroupsrel as r')
+            ->join('tblservers as s', 's.id', '=', 'r.serverid')
+            ->where('r.groupid', $product->servergroup)
+            ->where('s.disabled', 0)
+            ->orderBy('s.id', 'asc')
+            ->select('s.id', 's.username', 's.password')
+            ->first();
+
+        if (!$server) {
+            return ['username' => '', 'password' => ''];
+        }
+
+        // Decrypt via Local API
+        $plain = '';
+        try {
+            $resp = localAPI('DecryptPassword', ['password2' => $server->password]);
+            if (!empty($resp['result']) && $resp['result'] === 'success' && isset($resp['password'])) {
+                $plain = (string) $resp['password'];
+            }
+        } catch (\Throwable $e) {
+            $plain = '';
+        }
+
+        return [
+            'username' => (string) ($server->username ?? ''),
+            'password' => (string) $plain,
         ];
     }
 }

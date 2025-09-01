@@ -11,17 +11,26 @@ class AccountController
 {
     public function createAccount(array $params): string
     {
-        $username = $params['configoption1'];
-        $password = localAPI('DecryptPassword', ['password2' => $params['configoption2']])['password'];
-
         $isDNSSECEnabled = (
             isset($params['customfields'][DNSSEC_CUSTOM_FIELD_NAME]) &&
             $params['customfields'][DNSSEC_CUSTOM_FIELD_NAME] === 'on'
         ) ? true : false;
 
+        $productId = $params['pid'];
+        if (!$productId) {
+            return ERROR_NO_PRODUCT_ID_IN_QUERY_PARAMS;
+        }
+
         $moduleHelper = new OpenproviderPremiumDnsModuleHelper();
 
-        if (!$moduleHelper->initApi($username, $password)) {
+        // get credentials array with productId
+        $credentials = $moduleHelper->getCredentials($productId);
+
+        if (empty($credentials['username']) || empty($credentials['password'])) {
+            return ERROR_API_CLIENT_IS_NOT_CONFIGURED;
+        }
+
+        if (!$moduleHelper->initApi($credentials['username'], $credentials['password'])) {
             return ERROR_API_CLIENT_IS_NOT_CONFIGURED;
         } 
         try {
@@ -68,12 +77,21 @@ class AccountController
 
     public function terminateAccount(array $params): string
     {
-        $username = $params['configoption1'];
-        $password = localAPI('DecryptPassword', ['password2' => $params['configoption2']])['password'];
+        $productId = $params['pid'];
+        if (!$productId) {
+            return ERROR_NO_PRODUCT_ID_IN_QUERY_PARAMS;
+        }
 
         $moduleHelper = new OpenproviderPremiumDnsModuleHelper();
 
-        if (!$moduleHelper->initApi($username, $password)) {
+        // get credentials array with productId
+        $credentials = $moduleHelper->getCredentials($productId);
+
+        if (empty($credentials['username']) || empty($credentials['password'])) {
+            return ERROR_API_CLIENT_IS_NOT_CONFIGURED;
+        }
+
+        if (!$moduleHelper->initApi($credentials['username'], $credentials['password'])) {
             return ERROR_API_CLIENT_IS_NOT_CONFIGURED;
         }
 

@@ -13,10 +13,22 @@ class DNSSECController
     public function showClientAreaDnssecPage(array $params)
     {
         try {
+            $productId = $params['pid'];
+            if (!$productId) {
+                throw new Exception(ERROR_NO_PRODUCT_ID_IN_QUERY_PARAMS);
+            }
+
             $moduleHelper = new OpenproviderPremiumDnsModuleHelper();
 
-            if (!$moduleHelper->initApi($params['configoption1'], localAPI('DecryptPassword', ['password2' => $params['configoption2']])['password'])) {
-                throw new Exception('Failed to initialize Authentication API');
+            // get credentials array with productId
+            $credentials = $moduleHelper->getCredentials($productId);
+
+            if (empty($credentials['username']) || empty($credentials['password'])) {
+                throw new Exception(ERROR_API_CLIENT_IS_NOT_CONFIGURED);
+            }
+
+            if (!$moduleHelper->initApi($credentials['username'], $credentials['password'])) {
+                throw new Exception(ERROR_API_CLIENT_IS_NOT_CONFIGURED);
             }
 
             $dnsZoneResponse = $moduleHelper->call(ApiCommandNames::RETRIEVE_ZONE_DNS_REQUEST, [
@@ -68,10 +80,22 @@ class DNSSECController
     public function toggleDnssecStatus(array $params)
     {
         try {
+            $productId = $params['pid'];
+            if (!$productId) {
+                throw new Exception(ERROR_NO_PRODUCT_ID_IN_QUERY_PARAMS);
+            }
+
             $moduleHelper = new OpenproviderPremiumDnsModuleHelper();
 
-            if (!$moduleHelper->initApi($params['configoption1'], localAPI('DecryptPassword', ['password2' => $params['configoption2']])['password'])) {
-                throw new \Exception('Failed to initialize API');
+            // get credentials array with productId
+            $credentials = $moduleHelper->getCredentials($productId);
+
+            if (empty($credentials['username']) || empty($credentials['password'])) {
+                throw new Exception(ERROR_API_CLIENT_IS_NOT_CONFIGURED);
+            }
+
+            if (!$moduleHelper->initApi($credentials['username'], $credentials['password'])) {
+                throw new Exception(ERROR_API_CLIENT_IS_NOT_CONFIGURED);
             }
 
             $dnsZoneResponse = $moduleHelper->call(ApiCommandNames::RETRIEVE_ZONE_DNS_REQUEST, [

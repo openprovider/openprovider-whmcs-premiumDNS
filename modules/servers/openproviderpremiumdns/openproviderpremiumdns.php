@@ -36,20 +36,7 @@ function openproviderpremiumdns_MetaData()
 
 function openproviderpremiumdns_ConfigOptions()
 {
-    return [
-        // a text field type allows for single line text input
-        CONFIG_OPTION_LOGIN_NAME => [
-            'Type' => 'text',
-            'Description' => CONFIG_OPTION_LOGIN_DESCRIPTION,
-            'SimpleMode' => true,
-        ],
-        // a password field type allows for masked text input
-        CONFIG_OPTION_PASSWORD_NAME => [
-            'Type' => 'password',
-            'Description' => CONFIG_OPTION_PASSWORD_DESCRIPTION,
-            'SimpleMode' => true,
-        ],
-    ];
+    return [];
 }
 
 /**

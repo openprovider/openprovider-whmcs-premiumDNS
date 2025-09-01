@@ -2,9 +2,8 @@
 
 namespace OpenproviderPremiumDns\lib;
 
-use Carbon\Carbon;
-use WHMCS\Database\Capsule;
 use OpenproviderPremiumDns\lib\ApiCommandNames;
+use OpenproviderPremiumDns\helper\OpenproviderPremiumDnsModuleHelper;
 
 if (!defined("WHMCS")) {
     exit("This file cannot be accessed directly");
@@ -59,7 +58,21 @@ class RestCurlApi
     public function getDnsSingleDomainTokenUrl($params)
     {
         try {
-            $token = $this->generateToken($params['configoption1'], localAPI('DecryptPassword', ['password2' => $params['configoption2']])['password']);
+            $productId = $params['pid'];
+            if (!$productId) {
+                throw new \Exception(ERROR_NO_PRODUCT_ID_IN_QUERY_PARAMS);
+            }
+
+            $moduleHelper = new OpenproviderPremiumDnsModuleHelper();
+
+            // get credentials array with productId
+            $credentials = $moduleHelper->getCredentials($productId);
+
+            if (empty($credentials['username']) || empty($credentials['password'])) {
+                throw new \Exception(ERROR_API_CLIENT_IS_NOT_CONFIGURED);
+            }
+
+            $token = $this->generateToken($credentials['username'], $credentials['password']);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
