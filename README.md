@@ -127,8 +127,7 @@ These features are built to ensure automation, flexibility, and security for you
 
 1. Select **Openprovider PremiumDNS** as the **Module Name**.  
 2. Select the **Server Group** that you created with the PremiumDNS server added.  
-3. Enter the credentials for the Openprovider account you would like to use for provisioning PremiumDNS.  
-4. Select your desired **Automation Settings** for provisioning this product.  
+3. Select your desired **Automation Settings** for provisioning this product.  
 
 
 ![img](images/create_new_product_step3)
