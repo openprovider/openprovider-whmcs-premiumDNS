@@ -6,11 +6,10 @@
             "GuzzleHttp6\\Psr7\\": "vendor-static/guzzlehttp/psr7/src/",
             "GuzzleHttp6\\Promise\\": "vendor-static/guzzlehttp/promises/src/"
         },
-        "files":  [
+        "files": [
             "config/constants.php",
             "vendor-static/guzzlehttp/guzzle/src/functions_include.php",
-            "vendor-static/guzzlehttp/psr7/src/functions_include.php",
-            "vendor-static/guzzlehttp/promises/src/functions_include.php"
+            "vendor-static/guzzlehttp/psr7/src/functions_include.php"
         ],
         "classmap": [
             "lib/"
