@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         errorMsg.innerText = '';
 
         const formData = new FormData(form);
+        formData.append("token", window.csrfToken);
         const serviceId = form.querySelector('input[name="id"]').value;
         const url = `clientarea.php?action=productdetails&modop=custom&a=toggle_dnssec&id=${encodeURIComponent(
           serviceId
