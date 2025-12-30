@@ -21,6 +21,9 @@
         "symfony/serializer": "^5.2",
         "symfony/property-access": "^5.2"
     },
+    "replace": {
+        "psr/http-message": "*"
+    },
     "require-dev": {
         "phpunit/phpunit": "*",
         "mockery/mockery": "^1.0",
