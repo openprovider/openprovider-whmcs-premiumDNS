@@ -313,7 +313,7 @@ Several other fixes and improvements.
 
 ### Added
 
-- Rriggering of silenced deprecation warnings.
+- Triggering of silenced deprecation warnings.
 
 ### Fixed
 
