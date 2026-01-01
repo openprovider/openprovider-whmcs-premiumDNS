@@ -1,0 +1,10 @@
+review:
+  security: true
+  correctness: true
+  performance: true
+  style: true
+  edge_cases: true
+
+assumptions:
+  - Code runs within WHMCS client and admin areas
+  - PHP version is >= 8.1
