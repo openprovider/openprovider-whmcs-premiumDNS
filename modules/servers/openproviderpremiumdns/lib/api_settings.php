@@ -21,8 +21,15 @@ class ApiSettings
 
     public function __construct(string $settingsPath)
     {
-        $configs = file_get_contents($settingsPath);
+        $configsContent = @file_get_contents($settingsPath);
+        $configs = [];
 
+        if ($configsContent !== false) {
+            $decoded = json_decode($configsContent, true);
+            if (is_array($decoded)) {
+                $configs = $decoded;
+            }
+        }
         $this->clientName = $configs['client_name'] ?? 'whmcspdns-1.0.0-REST';
         $this->url = $configs['url'] ?? 'https://api.openprovider.eu';
         $this->cteUrl = $configs['cte_url'] ?? 'https://api.cte.openprovider.eu';
