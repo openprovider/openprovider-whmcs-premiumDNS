@@ -1,5 +1,5 @@
 {
-  "client_name": "whmcs-premiumdns-v1.0.0",
+  "client_name": "whmcspdns-1.0.0-REST",
   "url": "https://api.openprovider.eu",
   "cte_url": "https://api.cte.openprovider.eu"
 }
