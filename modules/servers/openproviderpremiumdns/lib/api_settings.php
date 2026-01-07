@@ -21,7 +21,10 @@ class ApiSettings
 
     public function __construct(string $settingsPath)
     {
-        $configsContent = @file_get_contents($settingsPath);
+        $configsContent = false;
+        if (is_readable($settingsPath)) {
+            $configsContent = file_get_contents($settingsPath);
+        }
         $configs = [];
 
         if ($configsContent !== false) {
