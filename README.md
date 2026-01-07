@@ -1,8 +1,4 @@
-# NOT BEING MAINTAINED
-
-**The Premium DNS Module will receive no updates until further notice**
-
-# openprovider-whmcs-premiumDNS 
+# Openprovider-WHMCS-PremiumDNS 
 
 Openprovider’s premium DNS leverages Sectigo’s advanced DNS infrastructure to provide a single, 
 integrated and easy to adopt solution which offers a 99.99% Uptime Guarantee and near real-time updates, 
