@@ -23,7 +23,7 @@ class ApiSettings
     {
         $configs = file_get_contents($settingsPath);
 
-        $this->clientName = $configs['client_name'] ?? 'whmcs-premiumdns-v1.0.0';
+        $this->clientName = $configs['client_name'] ?? 'whmcspdns-1.0.0-REST';
         $this->url = $configs['url'] ?? 'https://api.openprovider.eu';
         $this->cteUrl = $configs['cte_url'] ?? 'https://api.cte.openprovider.eu';
     }
