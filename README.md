@@ -112,7 +112,7 @@ These features are built to ensure automation, flexibility, and security for you
 
 ![img](images/create_new_product_step3)
 
-- Under the *Custom Fields* tab, add a new field with the **Field Name** set to `DNSSEC`, **Field Type** as `Checkbox`, and a **Description** of your choice — this allows clients to enable DNSSEC during order placement if desired or later with client area Premium DNS zone management. Check the **Show on Order Form** box to make this option visible to clients during the ordering process.
+- Under the **Custom Fields** tab, add a new field with the **Field Name** set to `DNSSEC`, **Field Type** as `Checkbox`, and a **Description** of your choice - this allows clients to enable DNSSEC during order placement if desired or later with client area Premium DNS zone management. Check the **Show on Order Form** box to make this option visible to clients during the ordering process.
 
 
 ![img](images/create_new_product_step4)
@@ -123,7 +123,7 @@ These features are built to ensure automation, flexibility, and security for you
 
 ## End user workflow in WHMCS basic cart
 
-The below example shows one way the provisioning module can work from the end user point of view. Various upsell options can be implemented via WHMCS to improve .
+The below example shows one way the provisioning module can work from the end user point of view. Various upsell options can be implemented via WHMCS to improve.
 
 - End user selects from the categories sidebar “Premium DNS” (the name of your product group where premium DNS is located) and choose a premium DNS product
 
