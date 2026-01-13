@@ -161,3 +161,19 @@ Once a Premium DNS product is provisioned, clients can manage their service dire
   Allows clients to delete the associated Premium DNS zone directly from the client area.
 
 These features empower your clients with full control over their DNS configurations without requiring administrative intervention.
+
+## Troubleshooting
+
+If domain operations from WHMCS are not working or showing errors or if there is any connectivity issues with Openprovider or API errors, the first troubleshooting step should be to enable module logging, reproduce the issue/error and review the System Module Debug Log. 
+
+Navigate to **Configuration > System Logs > Module Log** (prior to WHMCS 8.0, **Utilities > Logs**)​ and you can find the raw API commands being sent and received by your WHMCS modules. The responses should contain additional information about the problem and how it can be solved. 
+
+![alt text](images/troubleshooting_1 "Troubleshooting")
+
+If you have Openprovider addon installed and activated in your WHMCS, you should be able to download module and activity logs from **Addons** >> **Openprovider** >> click on the '**Download**' button.
+
+<img width="567" alt="image" src="images/troubleshooting_2">
+
+For more details, please refer to WHMCS documentation: [Troubleshooting Module Problems](https://docs.whmcs.com/Troubleshooting_Module_Problems) and [System Logs](https://docs.whmcs.com/System_Logs)
+
+Important: Only enable module logging for troubleshooting or testing purposes. At all other times, make certain that you set Module Logging to Off.
