@@ -3,6 +3,7 @@
 namespace OpenproviderPremiumDns\lib;
 
 use Openprovider\Api\Rest\Client\Base\Configuration;
+use GuzzleHttp6\ClientInterface as HttpClientInterface;
 use GuzzleHttp6\Client as HttpClient;
 use OpenproviderPremiumDns\lib\paramsBuilder\ParamsCreatorFactory;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
@@ -17,7 +18,7 @@ class OpenproviderApi
     private $configuration;
 
     /**
-     * @var HttpClient
+     * @var HttpClientInterface
      */
     private $httpClient;
 

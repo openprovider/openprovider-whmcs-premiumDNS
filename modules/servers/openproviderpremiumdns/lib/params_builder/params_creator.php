@@ -23,7 +23,6 @@ class ParamsCreator
     {
         $reflection = new \ReflectionMethod($client, $method);
         $namesOfArgs = array_column($reflection->getParameters(), 'name');
-
         return in_array('body', $namesOfArgs) ?
             $this->createParametersPostPut($args, $client, $method) :
             $this->createParametersGetDelete($args, $client, $method);
