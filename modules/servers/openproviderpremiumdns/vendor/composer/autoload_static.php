@@ -7,16 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
 {
     public static $files = array (
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
-        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
-        'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '9e7a8ca9c2c682ec2704dd873a0e3618' => __DIR__ . '/..' . '/php-mock/php-mock/autoload.php',
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
-        '72579e7bd17821bb1321b87411366eae' => __DIR__ . '/..' . '/illuminate/support/helpers.php',
         'c72349b1fe8d0deeedd3a52e8aa814d8' => __DIR__ . '/..' . '/mockery/mockery/library/helpers.php',
         'ce9671a430e4846b44e1c68c7611f9f5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
@@ -46,8 +44,6 @@ class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
             'Symfony\\Polyfill\\Intl\\Normalizer\\' => 33,
             'Symfony\\Polyfill\\Intl\\Grapheme\\' => 31,
             'Symfony\\Polyfill\\Ctype\\' => 23,
-            'Symfony\\Contracts\\Translation\\' => 30,
-            'Symfony\\Component\\Translation\\' => 30,
             'Symfony\\Component\\String\\' => 25,
             'Symfony\\Component\\Serializer\\' => 29,
             'Symfony\\Component\\PropertyInfo\\' => 31,
@@ -55,11 +51,8 @@ class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
         ),
         'P' => 
         array (
-            'Psr\\SimpleCache\\' => 16,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
-            'Psr\\Container\\' => 14,
-            'Psr\\Clock\\' => 10,
             'PhpParser\\' => 10,
             'PHPStan\\PhpDocParser\\' => 21,
         ),
@@ -83,13 +76,6 @@ class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
         array (
             'Mockery\\' => 8,
         ),
-        'I' => 
-        array (
-            'Illuminate\\Support\\' => 19,
-            'Illuminate\\Database\\' => 20,
-            'Illuminate\\Contracts\\' => 21,
-            'Illuminate\\Container\\' => 21,
-        ),
         'G' => 
         array (
             'GuzzleHttp6\\Psr7\\' => 17,
@@ -98,14 +84,8 @@ class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
         ),
         'D' => 
         array (
-            'Doctrine\\Inflector\\' => 19,
             'Doctrine\\Deprecations\\' => 22,
             'DeepCopy\\' => 9,
-        ),
-        'C' => 
-        array (
-            'Carbon\\Doctrine\\' => 16,
-            'Carbon\\' => 7,
         ),
     );
 
@@ -125,9 +105,9 @@ class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
-            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'Webmozart\\Assert\\' => 
         array (
@@ -153,14 +133,6 @@ class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-        'Symfony\\Contracts\\Translation\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/translation-contracts',
-        ),
-        'Symfony\\Component\\Translation\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/translation',
-        ),
         'Symfony\\Component\\String\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/string',
@@ -177,10 +149,6 @@ class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
         array (
             0 => __DIR__ . '/..' . '/symfony/property-access',
         ),
-        'Psr\\SimpleCache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
-        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
@@ -188,14 +156,6 @@ class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
         'Psr\\Http\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
-        ),
-        'Psr\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/container/src',
-        ),
-        'Psr\\Clock\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/clock/src',
         ),
         'PhpParser\\' => 
         array (
@@ -261,22 +221,6 @@ class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
         array (
             0 => __DIR__ . '/..' . '/mockery/mockery/library/Mockery',
         ),
-        'Illuminate\\Support\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/illuminate/support',
-        ),
-        'Illuminate\\Database\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/illuminate/database',
-        ),
-        'Illuminate\\Contracts\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/illuminate/contracts',
-        ),
-        'Illuminate\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/illuminate/container',
-        ),
         'GuzzleHttp6\\Psr7\\' => 
         array (
             0 => __DIR__ . '/../..' . '/vendor-static/guzzlehttp/psr7/src',
@@ -289,10 +233,6 @@ class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
         array (
             0 => __DIR__ . '/../..' . '/vendor-static/guzzlehttp/guzzle/src',
         ),
-        'Doctrine\\Inflector\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector',
-        ),
         'Doctrine\\Deprecations\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/deprecations/src',
@@ -300,14 +240,6 @@ class ComposerStaticInit955fc5c20311bfe20e6a779744f4f85d
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
-        ),
-        'Carbon\\Doctrine\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine',
-        ),
-        'Carbon\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
         ),
     );
 
