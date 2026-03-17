@@ -82,15 +82,18 @@ add_hook('ClientAreaHeadOutput', 1, function ($vars) {
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
                         // ===== confirm before deleting a PDNS zone =====
-                        const deleteBtn = document.querySelector("a[menuitemname='Custom Module Button Delete PDNS Zone']");
-                        if (deleteBtn) {
-                            deleteBtn.addEventListener("click", function (e) {
+                        document.addEventListener("click", function (e) {
+                            const deleteBtn = e.target.closest("a[menuitemname='Custom Module Button Delete PDNS Zone'], a[href*='a=TerminateAccount']");
+                            if (deleteBtn) {
                                 const confirmed = confirm("⚠️ Are you sure you want to delete this PDNS zone? This action cannot be undone.");
                                 if (!confirmed) {
                                     e.preventDefault();
+                                    e.stopPropagation();
+                                    e.stopImmediatePropagation();
+                                    return false;
                                 }
-                            });
-                        }
+                            }
+                        }, true);
 
                         // ===== Banner for the 3rd flow: "I will use my existing domain and update my nameservers" =====
                         const ownDomainInput = document.querySelector("input[name='domainoption'][value='owndomain']");
