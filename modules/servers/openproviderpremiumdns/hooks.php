@@ -82,7 +82,10 @@ add_hook('ClientAreaHeadOutput', 1, function ($vars) {
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
                         // ===== confirm before deleting a PDNS zone =====
-                        document.addEventListener("click", function (e) {
+                         document.addEventListener("click", function (e) {
+                             if (!e.target || typeof e.target.closest !== "function") {
+                                 return;
+                             }
                             const deleteBtn = e.target.closest("a[menuitemname='Custom Module Button Delete PDNS Zone'], a[href*='a=TerminateAccount']");
                             if (deleteBtn) {
                                 const confirmed = confirm("⚠️ Are you sure you want to delete this PDNS zone? This action cannot be undone.");
@@ -90,7 +93,7 @@ add_hook('ClientAreaHeadOutput', 1, function ($vars) {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     e.stopImmediatePropagation();
-                                    return false;
+                                    return;
                                 }
                             }
                         }, true);
