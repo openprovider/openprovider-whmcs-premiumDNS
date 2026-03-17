@@ -67,7 +67,7 @@ class Stream implements StreamInterface
     }
 
     /**
-     * Closes the stream when the destructor is called.
+     * Closes the stream when the destructed
      */
     public function __destruct()
     {
