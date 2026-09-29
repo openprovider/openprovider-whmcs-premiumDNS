@@ -54,12 +54,11 @@ class DNSSECController
                 'pubKey'   => $dnssecKeysArray[3],
             ];
 
-            echo $this->renderManageDnssecPage(
+            return $this->renderManageDnssecPage(
                 $params['serviceid'],
                 $isDnssecEnabled,
                 $dnssecKey
             );
-            exit;
         } catch (Exception $e) {
             return $e->getMessage();
         }
@@ -68,8 +67,10 @@ class DNSSECController
     /**
      * Custom actions triggered via ClientAreaCustomButtonArray (modop=custom&a=...)
      * are not rendered through WHMCS's templatefile/vars mechanism, so the markup
-     * is built and echoed directly here instead (same approach as
-     * DNSController::showManagePdns).
+     * is built and returned as a plain HTML string here instead (the same
+     * string-return convention toggleDnssecStatus() already uses). Do not echo+exit
+     * here: that skips WHMCS's normal request shutdown (session/cookie handling)
+     * and was observed to log the client and admin session out entirely.
      */
     private function renderManageDnssecPage($serviceId, $isDnssecEnabled, array $dnssecKey): string
     {
