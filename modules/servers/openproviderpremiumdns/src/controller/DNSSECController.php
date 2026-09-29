@@ -54,18 +54,98 @@ class DNSSECController
                 'pubKey'   => $dnssecKeysArray[3],
             ];
 
-            return ['templatefile' => 'manageDnssec', 'vars' => [
-                'serviceId' => $params['serviceid'],
-                'isDnssecEnabled' => $isDnssecEnabled,
-                'dnssecKey' => $dnssecKey,
-                'cssModuleUrl' => Configuration::getCssModuleUrl('dnssec'),
-                'jsModuleUrl' => Configuration::getJsModuleUrl('dnssec'),
-            ]];
+            echo $this->renderManageDnssecPage(
+                $params['serviceid'],
+                $isDnssecEnabled,
+                $dnssecKey
+            );
+            exit;
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
 
-        return SUCCESS_MESSAGE;
+    /**
+     * Custom actions triggered via ClientAreaCustomButtonArray (modop=custom&a=...)
+     * are not rendered through WHMCS's templatefile/vars mechanism, so the markup
+     * is built and echoed directly here instead (same approach as
+     * DNSController::showManagePdns).
+     */
+    private function renderManageDnssecPage($serviceId, $isDnssecEnabled, array $dnssecKey): string
+    {
+        $cssModuleUrl = htmlspecialchars(Configuration::getCssModuleUrl('dnssec'), ENT_QUOTES);
+        $jsModuleUrl = htmlspecialchars(Configuration::getJsModuleUrl('dnssec'), ENT_QUOTES);
+        $serviceId = htmlspecialchars((string) $serviceId, ENT_QUOTES);
+        $toggleLabel = $isDnssecEnabled ? 'Deactivate DNSSEC' : 'Activate DNSSEC';
+
+        $flags = htmlspecialchars((string) $dnssecKey['flags'], ENT_QUOTES);
+        $alg = htmlspecialchars((string) $dnssecKey['alg'], ENT_QUOTES);
+        $pubKey = htmlspecialchars((string) $dnssecKey['pubKey'], ENT_QUOTES);
+
+        if ($isDnssecEnabled) {
+            $disabledAlertClass = 'dnssec-alert-on-disabled alert alert-warning hidden';
+            $enabledAlertClass = 'dnssec-alert-on-enabled alert alert-warning';
+            $enabledNewAlertHtml = '';
+            $tableClass = 'dnssec-records-table table table-bordered';
+        } else {
+            $disabledAlertClass = 'dnssec-alert-on-disabled alert alert-warning';
+            $enabledAlertClass = 'dnssec-alert-on-enabled alert alert-warning hidden';
+            $enabledNewAlertHtml = '<div class="dnssec-alert-on-enabled-new alert alert-warning hidden">
+            DNSSEC has not been activated yet. Please activate to add a DNSSEC record for this premium DNS zone.
+        </div>';
+            $tableClass = 'dnssec-records-table table table-bordered hidden';
+        }
+
+        return <<<HTML
+        <link rel="stylesheet" href="{$cssModuleUrl}">
+        <script src="{$jsModuleUrl}"></script>
+        <section class="js-dnssec-module">
+            <div class="row d-flex align-items-center justify-content-between mb-3">
+                <h2 class="mb-0">Manage DNSSEC Records</h2>
+
+                <form id="dnssecToggleForm" class="mb-0 d-flex align-items-center gap-2">
+                    <input type="hidden" name="id" value="{$serviceId}" />
+                    <input type="hidden" name="modop" value="custom" />
+                    <input type="hidden" name="a" value="toggle_dnssec" />
+                    <button class="btn btn-primary" type="submit" id="dnssecToggleBtn">
+                        {$toggleLabel}
+                    </button>
+                    <div id="dnssecLoading" class="spinner-border text-primary ml-2" role="status" style="display: none;">
+                        <span style="display: none;">Loading...</span>
+                    </div>
+                </form>
+            </div>
+
+            <div class="dnssec-alert-error-message alert alert-danger hidden">
+                <span id="dnssecErrorMessage"></span>
+            </div>
+
+            <div class="{$disabledAlertClass}">
+                DNSSEC is not active on this domain.
+            </div>
+            <div class="{$enabledAlertClass}">
+                DNSSEC is active for this domain. If you deactivate DNSSEC, existing key will be deleted from this premium DNS zone.
+            </div>
+            {$enabledNewAlertHtml}
+
+            <table class="{$tableClass}">
+                <thead>
+                    <tr>
+                        <th>Flags</th>
+                        <th>Algorithm</th>
+                        <th>Public key</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{$flags}</td>
+                    <td>{$alg}</td>
+                    <td class="break-word">{$pubKey}</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+        HTML;
     }
 
     public function toggleDnssecStatus(array $params)
