@@ -27,14 +27,25 @@ document.addEventListener('DOMContentLoaded', function () {
             body: formData,
             credentials: 'same-origin'
         })
-        .then(response => response.text())
-        .then(html => {
-            location.reload(); // Optional: Replace with dynamic UI update
+        .then(response => response.text().then(text => {
+            if (!response.ok) {
+                throw new Error(text || 'DNSSEC toggle failed. Please try again.');
+            }
+            return text;
+        }))
+        .then(text => {
+            if (text.trim() === 'success') {
+                location.reload();
+                return;
+            }
+
+            // The module returned an error message instead of "success".
+            throw new Error(text.trim() || 'DNSSEC toggle failed. Please try again.');
         })
         .catch(error => {
             console.error('DNSSEC toggle failed:', error);
             errorBox.classList.remove('hidden');
-            errorMsg.innerText = 'DNSSEC toggle failed. Please try again.';
+            errorMsg.innerText = error.message || 'DNSSEC toggle failed. Please try again.';
         })
         .finally(() => {
             loader.style.display = 'none';
