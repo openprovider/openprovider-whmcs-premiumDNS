@@ -4,6 +4,7 @@ require_once __DIR__ . '/openproviderpremiumdns.php';
 
 use OpenproviderPremiumDns\helper\OpenproviderPremiumDnsModuleHelper;
 use OpenproviderPremiumDns\lib\ApiCommandNames;
+use WHMCS\Database\Capsule;
 use WHMCS\View\Menu\Item as MenuItem;
 
 add_hook('ShoppingCartValidateDomain', 1, function($vars) {
@@ -11,9 +12,19 @@ add_hook('ShoppingCartValidateDomain', 1, function($vars) {
         return;
     }
 
-    $productId = $_REQUEST['pid'];
+    // No product id: can't tell if it's Premium DNS, so don't block
+    $productId = (int) ($_REQUEST['pid'] ?? 0);
     if (!$productId) {
-        return ERROR_NO_PRODUCT_ID_IN_QUERY_PARAMS;
+        return;
+    }
+
+    // Only validate Premium DNS products
+    $productModule = Capsule::table('tblproducts')
+        ->where('id', $productId)
+        ->value('servertype');
+
+    if (strtolower((string) $productModule) !== MODULE_IDENTIFIER) {
+        return;
     }
 
     $moduleHelper = new OpenproviderPremiumDnsModuleHelper();
