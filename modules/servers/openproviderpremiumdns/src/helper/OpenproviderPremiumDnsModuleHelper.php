@@ -154,10 +154,11 @@ class OpenproviderPremiumDnsModuleHelper
             return ['username' => '', 'password' => ''];
         }
 
-        // Pick a server from that group (first non-disabled)
+        // Pick the first enabled Premium DNS server from that group
         $server = Capsule::table('tblservergroupsrel as r')
             ->join('tblservers as s', 's.id', '=', 'r.serverid')
             ->where('r.groupid', $product->servergroup)
+            ->where('s.type', MODULE_IDENTIFIER)
             ->where('s.disabled', 0)
             ->orderBy('s.id', 'asc')
             ->select('s.id', 's.username', 's.password')
